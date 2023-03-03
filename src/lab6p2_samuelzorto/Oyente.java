@@ -10,18 +10,12 @@ public class Oyente extends Usuario{
     public Oyente() {
     }
 
-    public Oyente(String nombre, String username, String contra, int anio) {
+    public Oyente(String username, String contra, int anio) {
         super(username, contra, anio);
-        this.nombre = nombre;
+        
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    
 
     public ArrayList<Canciones> getListaC() {
         return listaC;
