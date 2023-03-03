@@ -79,6 +79,7 @@ public class principal extends javax.swing.JFrame {
             }
         });
 
+        jRadioButton1.setForeground(new java.awt.Color(204, 204, 204));
         jRadioButton1.setSelected(true);
         jRadioButton1.setText("Oyente");
         jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -87,6 +88,7 @@ public class principal extends javax.swing.JFrame {
             }
         });
 
+        jRadioButton2.setForeground(new java.awt.Color(204, 204, 204));
         jRadioButton2.setText("Artista");
         jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -257,6 +259,12 @@ public class principal extends javax.swing.JFrame {
         
         if(anio < 12){
             JOptionPane.showMessageDialog(jd_signup, "Debe tener mas de 12 años para crear una cuenta");
+        }else{
+            if(cuenta){
+                
+            }else{
+                
+            }
         }
     }//GEN-LAST:event_jButton1MouseClicked
 
