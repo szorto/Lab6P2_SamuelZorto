@@ -4,7 +4,10 @@
  */
 package lab6p2_samuelzorto;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,6 +21,8 @@ public class principal extends javax.swing.JFrame {
      */
     public principal() {
         initComponents();
+        
+
     }
 
     /**
@@ -48,7 +53,7 @@ public class principal extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jtf_usuario1 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        jb_login1 = new javax.swing.JButton();
         buttonGroup1 = new javax.swing.ButtonGroup();
         jd_artista = new javax.swing.JDialog();
         jd_oyente = new javax.swing.JDialog();
@@ -183,12 +188,12 @@ public class principal extends javax.swing.JFrame {
         jtf_usuario1.setBackground(new java.awt.Color(102, 102, 102));
         jtf_usuario1.setForeground(new java.awt.Color(204, 204, 204));
 
-        jButton2.setBackground(new java.awt.Color(51, 51, 51));
-        jButton2.setForeground(new java.awt.Color(153, 153, 153));
-        jButton2.setText("Log in");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+        jb_login1.setBackground(new java.awt.Color(51, 51, 51));
+        jb_login1.setForeground(new java.awt.Color(153, 153, 153));
+        jb_login1.setText("Log in");
+        jb_login1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton2MouseClicked(evt);
+                jb_login1MouseClicked(evt);
             }
         });
 
@@ -204,7 +209,7 @@ public class principal extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel3)
-                    .addComponent(jButton2)
+                    .addComponent(jb_login1)
                     .addComponent(jtf_contra1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtf_usuario1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(249, 249, 249))
@@ -223,7 +228,7 @@ public class principal extends javax.swing.JFrame {
                     .addComponent(jtf_contra1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jb_login1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(93, 93, 93))
         );
 
@@ -330,6 +335,13 @@ public class principal extends javax.swing.JFrame {
         jd_signup.pack();
         jd_signup.setLocationRelativeTo(this);
         jd_signup.setVisible(true);
+        
+        AdminUsuario ap= new AdminUsuario("./Usuario.txt");  
+        u.clear();
+        ap.cargarArchivo();
+        for (Usuario t : ap.getUsu()) {
+            u.add(t);
+        }
     }//GEN-LAST:event_jb_signupMouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
@@ -349,25 +361,44 @@ public class principal extends javax.swing.JFrame {
                 }
             }
 
-            if (cuenta && ver) {
-                u.add(new Oyente(username, contra, anio));
-                JOptionPane.showMessageDialog(jd_signup, "Oyente fue crado exitosamente");
-                jtf_usuario.setText("");
-                jtf_contra.setText("");
-                js_edad.setValue(0);
-            } else if (ver) {
-                if (anio < 18) {
-                    JOptionPane.showMessageDialog(jd_signup, "Debe tener mas de 18 años para ser un artista");
-                } else {
-                    nombre = JOptionPane.showInputDialog(jd_signup, "Ingrese el nombre de artista");
-                    u.add(new Artistas(username, contra, anio, nombre));
-                    JOptionPane.showMessageDialog(jd_signup, "Artista fue crado exitosamente");
-                    jtf_usuario.setText("");
-                    jtf_contra.setText("");
-                    js_edad.setValue(0);
-                }
+            if (ver) {
+                if (cuenta) {
 
+                    try {
+                        AdminUsuario au = new AdminUsuario("./Usuarios.txt");
+                        au.cargarArchivo();
+                        au.getUsu().add(new Oyente(username, contra, anio));
+                        au.escribirArchivo();
+                        
+                        u.add(new Oyente(username, contra, anio));
+                        
+                        JOptionPane.showMessageDialog(jd_signup, "Oyente fue crado exitosamente");
+                        jtf_usuario.setText("");
+                        jtf_contra.setText("");
+                        js_edad.setValue(0);
+                    } catch (IOException ex) {
+                    }
+                } else {
+                    try {
+                        nombre = JOptionPane.showInputDialog(jd_signup, "Ingrese el nombre de artista");
+                        u.add(new Artistas(username, contra, anio, nombre));
+                        JOptionPane.showMessageDialog(jd_signup, "Artista fue crado exitosamente");
+
+                        AdminUsuario au = new AdminUsuario("./Usuarios.txt");
+                        au.cargarArchivo();
+                        au.getUsu().add(new Artistas(username, contra, anio, nombre));
+                        au.escribirArchivo();
+                        
+                        
+                        jtf_usuario.setText("");
+                        jtf_contra.setText("");
+                        js_edad.setValue(0);
+                        System.out.println(u);
+                    } catch (IOException ex) {
+                    }
+                }
             }
+
         }
     }//GEN-LAST:event_jButton1MouseClicked
 
@@ -379,16 +410,24 @@ public class principal extends javax.swing.JFrame {
         cuenta = false;
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-
+    private void jb_login1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_login1MouseClicked
+        AdminUsuario ap= new AdminUsuario("./Usuario.txt");        
+        ap.cargarArchivo();
+        u.clear();
+        for (Usuario t : ap.getUsu()) {
+            u.add(t);
+            System.out.println(t);
+        }
+        
         for (Usuario usu : u) {
-            if (usu.getUsername().equals(jtf_usuario1) && usu.getContra().equals(jtf_contra1)) {
+
+            if (usu.getUsername().equals(jtf_usuario1.getText()) && usu.getContra().equals(jtf_contra1.getText())) {
                 if (usu instanceof Oyente) {
                     jd_oyente.setModal(true);
                     jd_oyente.pack();
                     jd_oyente.setLocationRelativeTo(this);
                     jd_oyente.setVisible(true);
-                } else if (usu instanceof Oyente) {
+                } else if (usu instanceof Artistas) {
                     jd_artista.setModal(true);
                     jd_artista.pack();
                     jd_artista.setLocationRelativeTo(this);
@@ -397,7 +436,7 @@ public class principal extends javax.swing.JFrame {
             }
         }
 
-    }//GEN-LAST:event_jButton2MouseClicked
+    }//GEN-LAST:event_jb_login1MouseClicked
 
     private void jb_loginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_loginMouseClicked
         jd_login.setModal(true);
@@ -444,7 +483,6 @@ public class principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -459,6 +497,7 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JButton jb_login;
+    private javax.swing.JButton jb_login1;
     private javax.swing.JButton jb_signup;
     private javax.swing.JDialog jd_artista;
     private javax.swing.JDialog jd_login;

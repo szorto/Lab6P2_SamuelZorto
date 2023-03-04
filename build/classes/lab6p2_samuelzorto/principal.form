@@ -222,7 +222,7 @@
                       <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
                           <Component id="jLabel3" alignment="2" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton2" alignment="2" min="-2" max="-2" attributes="0"/>
+                          <Component id="jb_login1" alignment="2" min="-2" max="-2" attributes="0"/>
                           <Component id="jtf_contra1" alignment="2" min="-2" pref="141" max="-2" attributes="0"/>
                           <Component id="jtf_usuario1" alignment="2" min="-2" pref="141" max="-2" attributes="0"/>
                       </Group>
@@ -246,7 +246,7 @@
                           <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="74" max="32767" attributes="0"/>
-                      <Component id="jButton2" min="-2" pref="49" max="-2" attributes="0"/>
+                      <Component id="jb_login1" min="-2" pref="49" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -297,7 +297,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton2">
+            <Component class="javax.swing.JButton" name="jb_login1">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="33" green="33" red="33" type="rgb"/>
@@ -308,7 +308,7 @@
                 <Property name="text" type="java.lang.String" value="Log in"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton2MouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jb_login1MouseClicked"/>
               </Events>
             </Component>
           </SubComponents>
